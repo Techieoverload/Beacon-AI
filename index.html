@@ -33,7 +33,16 @@ header {
     padding-bottom: 20px; border-bottom: 1px solid var(--border); 
 }
 
-.header-title { font-size: clamp(1.25rem, 4vw, 1.5rem); font-weight: 600; text-align: center; letter-spacing: -0.02em; }
+/* Updated Header Title for Logo Alignment */
+.header-title { 
+    font-size: clamp(1.25rem, 4vw, 1.5rem); 
+    font-weight: 600; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    gap: 12px;
+    letter-spacing: -0.02em; 
+}
 
 .auth-panel { display: flex; flex-direction: column; align-items: center; width: 100%; gap: 12px; }
 .user-name { font-size: 0.875rem; font-weight: 500; color: var(--text-muted); }
@@ -111,7 +120,7 @@ textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 
 @media (min-width: 768px) {
     body { padding: 40px 20px; }
     header { flex-direction: row; justify-content: space-between; align-items: center; padding-bottom: 24px; }
-    .header-title { text-align: left; }
+    .header-title { justify-content: flex-start; }
     .auth-panel { flex-direction: row; width: auto; gap: 16px; }
     .btn { width: auto; padding: 0 20px; }
     .prompt-area { flex-direction: row; align-items: flex-start; }
@@ -153,7 +162,17 @@ textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 
     <div class="container">
         
         <header>
-            <div class="header-title">Beacon AI</div>
+            <div class="header-title">
+                <!-- Custom SVG Logo -->
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="2" fill="var(--primary)"></circle>
+                    <path d="M8.5 8.5c-1.9 1.9-1.9 5.1 0 7.1"></path>
+                    <path d="M15.5 8.5c1.9 1.9 1.9 5.1 0 7.1"></path>
+                    <path d="M5.5 5.5c-3.6 3.6-3.6 9.4 0 13"></path>
+                    <path d="M18.5 5.5c3.6 3.6 3.6 9.4 0 13"></path>
+                </svg>
+                Beacon AI
+            </div>
             <div class="auth-panel">
                 <button class="btn btn-outline" onclick="toggleSettings()">⚙️ Premium Settings</button>
                 <span id="user-name" class="user-name">Not logged in</span>
@@ -210,7 +229,6 @@ textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 
     </div>
 
     <script>
-        // Check for saved API key on load
         window.onload = () => {
             const savedKey = localStorage.getItem('or_key');
             if (savedKey) {
@@ -286,7 +304,6 @@ textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 
         }
         initAuth();
 
-        // Function to copy text to clipboard
         function copyText(elementId, btn) {
             const text = document.getElementById(elementId).innerText;
             if (!text || text === "Ready." || text.includes("Thinking...")) return;
@@ -325,7 +342,6 @@ textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 
                 return;
             }
 
-            // Inject the CSS spinner and loading text
             models.forEach(m => document.getElementById(m.element).innerHTML = '<div class="loading-text"><span class="spinner"></span> Thinking...</div>');
 
             models.forEach(async (m) => {
